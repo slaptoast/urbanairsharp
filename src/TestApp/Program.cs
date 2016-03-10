@@ -9,15 +9,15 @@ namespace TestApp
 {
     class Program
     {
-		private const String AppKey = "YOUR_URBAN_AIRSHIP_APP_KEY";
-		private const String AppMasterSecret = "YOUR_URBAN_AIRSHIP_APP_MASTER_SECRET";
+		private const string AppKey = "YOUR_URBAN_AIRSHIP_APP_KEY";
+		private const string AppMasterSecret = "YOUR_URBAN_AIRSHIP_APP_MASTER_SECRET";
 	    
-		private const String TestDeviceToken = "YOUR_TEST_DEVICE_DEVICE_TOKEN";
-		private const String TestDeviceGuid = "YOUR_TEST_DEVICE_DEVICE_GUID"; //Example: "946fdc3d-0284-468f-a2f7-d007ed694908"
+		private const string TestDeviceToken = "YOUR_TEST_DEVICE_DEVICE_TOKEN";
+		private const string TestDeviceGuid = "YOUR_TEST_DEVICE_DEVICE_GUID"; //Example: "946fdc3d-0284-468f-a2f7-d007ed694908"
 
 	    private static UrbanAirSharpGateway _urbanAirSharpGateway;
 
-        static void Main(String[] args)
+        static void Main(string[] args)
         {
             _urbanAirSharpGateway = new UrbanAirSharpGateway(AppKey, AppMasterSecret);
 

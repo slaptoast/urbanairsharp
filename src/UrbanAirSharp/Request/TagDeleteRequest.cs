@@ -12,7 +12,7 @@ namespace UrbanAirSharp.Request
 	/// </summary>
 	public class TagDeleteRequest : DeleteRequest<BaseResponse>
 	{
-		public TagDeleteRequest(String tag)
+		public TagDeleteRequest(string tag)
 		{
 			RequestUrl = "api/tags/" + tag + "/";
 		}

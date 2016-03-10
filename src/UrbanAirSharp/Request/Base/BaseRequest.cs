@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using log4net;
 using Newtonsoft.Json;
 using UrbanAirSharp.Response;
@@ -14,13 +15,13 @@ namespace UrbanAirSharp.Request.Base
 	{
 		protected HttpClient HttpClient;
 		protected JsonSerializerSettings SerializerSettings;
-		protected String Host;
-		protected String RequestUrl;
+		protected string Host;
+		protected string RequestUrl;
 		protected HttpMethod RequestMethod;
 
 		protected static readonly ILog Log = LogManager.GetLogger(typeof(TResponse));
 
-		protected BaseRequest(String host, HttpClient httpClient, JsonSerializerSettings serializerSettings)
+		protected BaseRequest(string host, HttpClient httpClient, JsonSerializerSettings serializerSettings)
 		{
 			Host = host;
 			HttpClient = httpClient;
@@ -31,13 +32,15 @@ namespace UrbanAirSharp.Request.Base
 				Host += "/";
 			}
 		}
-
+        
+#pragma warning disable 1998
 		public virtual async Task<TResponse> ExecuteAsync()
 		{
 			return null;
-		}
+        }
+#pragma warning restore 1998
 
-		protected async Task<TResponse> DeserializeResponseAsync(HttpResponseMessage response)
+        protected async Task<TResponse> DeserializeResponseAsync(HttpResponseMessage response)
 		{
 			var contentJson = await response.Content.ReadAsStringAsync();
 
@@ -64,7 +67,7 @@ namespace UrbanAirSharp.Request.Base
 				result = new TResponse();
 			}
 
-			if (String.IsNullOrEmpty(result.Message))
+			if (string.IsNullOrEmpty(result.Message))
 			{
 				result.Message = response.ReasonPhrase;
 			}

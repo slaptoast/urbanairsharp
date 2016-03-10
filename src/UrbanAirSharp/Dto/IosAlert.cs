@@ -11,10 +11,10 @@ namespace UrbanAirSharp.Dto
 		/// TODO only "auto" supported for now
 		/// </summary>
 		[JsonProperty("badge")] 
-		public String Badge = "auto";
+		public string Badge = "auto";
 
 		[JsonProperty("sound")]
-		public String Sound { get; set; }
+		public string Sound { get; set; }
 
 		[JsonProperty("content_available")]
 		public bool ContentAvailable { get; set; }
@@ -26,6 +26,6 @@ namespace UrbanAirSharp.Dto
 		public int Priority = 10;
 
 		[JsonProperty("extra")]
-		public Dictionary<String, String> Extras { get; set; }
+		public Dictionary<string, string> Extras { get; set; }
 	}
 }

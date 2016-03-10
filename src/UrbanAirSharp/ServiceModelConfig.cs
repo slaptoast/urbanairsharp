@@ -12,13 +12,13 @@ namespace UrbanAirSharp
 {
 	public static class ServiceModelConfig
 	{
-		public static readonly String Host = "https://go.urbanairship.com/";
+		public static readonly string Host = "https://go.urbanairship.com/";
 		public static readonly HttpClient HttpClient = new HttpClient();
 		public static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings();
 
-		public static void Create(String uaAppKey, String uaAppMAsterSecret)
+		public static void Create(string uaAppKey, string uaAppMAsterSecret)
 		{
-			var auth = String.Format("{0}:{1}", uaAppKey, uaAppMAsterSecret);
+			var auth = string.Format("{0}:{1}", uaAppKey, uaAppMAsterSecret);
 			auth = Convert.ToBase64String(Encoding.ASCII.GetBytes(auth));
 
 			SerializerSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });

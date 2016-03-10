@@ -19,7 +19,7 @@ namespace UrbanAirSharp.Request.Base
 	{
 		//TODO: PostRequest shouldn't declate this - should be more abstract
 		public readonly Encoding Encoding = Encoding.UTF8;
-		public const String MediaType = "application/json";
+		public const string MediaType = "application/json";
 
 		protected TContent Content;
 		

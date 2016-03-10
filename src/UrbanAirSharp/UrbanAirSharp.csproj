@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UrbanAirSharp</RootNamespace>
-    <AssemblyName>UrbanAirSharp</AssemblyName>
+    <AssemblyName>UrbanAirSharp.Mk2</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -25,11 +25,15 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
@@ -81,6 +85,7 @@
     <Compile Include="Request\ScheduleEditRequest.cs" />
     <Compile Include="Request\ScheduleCreateRequest.cs" />
     <Compile Include="Response\PushResponse.cs" />
+    <Compile Include="Response\ResponseObject.cs" />
     <Compile Include="Response\ScheduleEditResponse.cs" />
     <Compile Include="Response\ScheduleGetResponse.cs" />
     <Compile Include="Response\ScheduleListResponse.cs" />
