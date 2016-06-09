@@ -39,7 +39,8 @@ namespace UrbanAirSharp
     /// api/location 
     /// </summary>
     /// <seealso href="http://docs.urbanairship.com/reference/api/v3/">Urban Airship API V3</seealso>
-    public class UrbanAirSharpGateway {
+    public class UrbanAirSharpGateway
+    {
         /// <summary>
         /// Should we execute code using <see cref="Awaitable{TResult}"/>.
         /// <remarks>This option makes utilization of the class simpler under the ASP.NET WebAPI Paradigm.</remarks>
@@ -50,17 +51,17 @@ namespace UrbanAirSharp
         /// Log4Net Logger
         /// </summary>
 		private static readonly ILog Log = LogManager.GetLogger(typeof(UrbanAirSharpGateway));
-        
+
         /// <summary>
         /// Create a new gateway object utilizng a given key set.
         /// </summary>
         /// <param name="appKey">Application Key</param>
         /// <param name="appMasterSecret">Application Master Secret</param>
-		public UrbanAirSharpGateway(string appKey, string appMasterSecret)
-		{
-			XmlConfigurator.Configure();
-			ServiceModelConfig.Create(appKey, appMasterSecret);
-		}
+        public UrbanAirSharpGateway(string appKey, string appMasterSecret)
+        {
+            XmlConfigurator.Configure();
+            ServiceModelConfig.Create(appKey, appMasterSecret);
+        }
 
         /// <summary>
         /// Send a Push request. This call can perform the following: 
@@ -91,18 +92,19 @@ namespace UrbanAirSharp
         /// <param name="customAudience">a more specific way to choose the audience for the push. If this is set, deviceId is ignored</param>
         /// <returns>Service Response</returns>
         public PushResponse Validate(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null,
-			IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
-		{
-			return SendRequest(new PushValidateRequest(CreatePush(alert, deviceTypes, deviceId, deviceAlerts, customAudience)));
-		}
+            IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
+        {
+            return SendRequest(new PushValidateRequest(CreatePush(alert, deviceTypes, deviceId, deviceAlerts, customAudience)));
+        }
 
         /// <summary>
         /// Create a Schedule
         /// </summary>
         /// <param name="schedule">Schedule</param>
         /// <returns>Service Response</returns>
-		public ScheduleCreateResponse CreateSchedule(Schedule schedule) {
-			return SendRequest(new ScheduleCreateRequest(schedule));
+		public ScheduleCreateResponse CreateSchedule(Schedule schedule)
+        {
+            return SendRequest(new ScheduleCreateRequest(schedule));
         }
 
         /// <summary>
@@ -113,7 +115,7 @@ namespace UrbanAirSharp
         /// <returns>Service Response</returns>
 		public ScheduleEditResponse EditSchedule(Guid scheduleId, Schedule schedule)
         {
-			return SendRequest(new ScheduleEditRequest(scheduleId, schedule));
+            return SendRequest(new ScheduleEditRequest(scheduleId, schedule));
         }
 
         /// <summary>
@@ -123,7 +125,7 @@ namespace UrbanAirSharp
         /// <returns>Service Response</returns>
 		public BaseResponse DeleteSchedule(Guid scheduleId)
         {
-			return SendRequest(new ScheduleDeleteRequest(scheduleId));
+            return SendRequest(new ScheduleDeleteRequest(scheduleId));
         }
 
         /// <summary>
@@ -133,7 +135,7 @@ namespace UrbanAirSharp
         /// <returns>Service Response</returns>
         public ScheduleGetResponse GetSchedule(Guid scheduleId)
         {
-			return SendRequest(new ScheduleGetRequest(scheduleId));
+            return SendRequest(new ScheduleGetRequest(scheduleId));
         }
 
         /// <summary>
@@ -142,7 +144,43 @@ namespace UrbanAirSharp
         /// <returns>Service Response</returns>
         public ScheduleListResponse ListSchedules()
         {
-			return SendRequest(new ScheduleListRequest());
+            return SendRequest(new ScheduleListRequest());
+        }
+
+        /// <summary>
+        /// Get list of all named users. Can provide a named user id to start list from.
+        /// </summary>
+        /// <returns>Service Response</returns>
+        public NamedUsersListResponse GetNamedUsersList(string StartNamedUserId = null)
+        {
+            return SendRequest(new NamedUsersListRequest(StartNamedUserId));
+        }
+
+        /// <summary>
+        /// Get a named user
+        /// </summary>
+        /// <returns>Service Response</returns>
+        public NamedUserResponse GetNamedUser(string NamedUserId)
+        {
+            return SendRequest(new NamedUserRequest(NamedUserId));
+        }
+
+        /// <summary>
+        /// Associate named user with a device
+        /// </summary>
+        /// <returns>Service Response</returns>
+        public BaseResponse AssociateNamedUser(string ChannelId, DeviceType DeviceType, string NamedUserId)
+        {
+            return SendRequest(new NamedUserAssociationRequest(new Association(ChannelId, DeviceType, NamedUserId)));
+        }
+
+        /// <summary>
+        /// Disassociate named user from a device
+        /// </summary>
+        /// <returns>Service Response</returns>
+        public BaseResponse DisassociateNamedUser(string ChannelId, DeviceType DeviceType, string NamedUserId)
+        {
+            return SendRequest(new NamedUserDisassociationRequest(new Association(ChannelId, DeviceType, NamedUserId)));
         }
 
         /// <summary>
@@ -154,24 +192,24 @@ namespace UrbanAirSharp
         /// </summary>
         /// <returns>Service Response</returns>
         public BaseResponse RegisterDeviceToken(string deviceToken)
-		{
-			return RegisterDeviceToken(new DeviceToken {Token = deviceToken});
-		}
+        {
+            return RegisterDeviceToken(new DeviceToken { Token = deviceToken });
+        }
 
-	    /// <summary>
-	    /// Register / Update a Device Registration
-	    /// Registers a device token with extended properties with the Urban Airship site, this can be used for new device 
-	    /// tokens and for existing tokens. If a token has become inactive reregistering it will make it active again. 
-	    /// </summary>
-	    /// <returns>Service Response</returns>
-	    /// <exception cref="ArgumentException">A device Tokens Token field is Required</exception>
-	    public BaseResponse RegisterDeviceToken(DeviceToken deviceToken)
-		{
-			if (string.IsNullOrEmpty(deviceToken.Token))
-				throw new ArgumentException("A device Tokens Token field is Required", "deviceToken");
+        /// <summary>
+        /// Register / Update a Device Registration
+        /// Registers a device token with extended properties with the Urban Airship site, this can be used for new device 
+        /// tokens and for existing tokens. If a token has become inactive reregistering it will make it active again. 
+        /// </summary>
+        /// <returns>Service Response</returns>
+        /// <exception cref="ArgumentException">A device Tokens Token field is Required</exception>
+        public BaseResponse RegisterDeviceToken(DeviceToken deviceToken)
+        {
+            if (string.IsNullOrEmpty(deviceToken.Token))
+                throw new ArgumentException("A device Tokens Token field is Required", "deviceToken");
 
-			return SendRequest(new DeviceTokenRequest(deviceToken));
-		}
+            return SendRequest(new DeviceTokenRequest(deviceToken));
+        }
 
         /// <summary>
         /// Create a System Wide Tag
@@ -180,12 +218,12 @@ namespace UrbanAirSharp
         /// <returns>Service Response</returns>
         /// <exception cref="ArgumentException">A tag name is Required</exception>
         public BaseResponse CreateTag(Tag tag)
-		{
-			if (string.IsNullOrEmpty(tag.TagName))
-				throw new ArgumentException("A tag name is Required", "tag");
+        {
+            if (string.IsNullOrEmpty(tag.TagName))
+                throw new ArgumentException("A tag name is Required", "tag");
 
-			return SendRequest(new TagCreateRequest(tag));
-		}
+            return SendRequest(new TagCreateRequest(tag));
+        }
 
         /// <summary>
         /// Remove a System Wide Tag
@@ -194,100 +232,100 @@ namespace UrbanAirSharp
         /// <returns>Service Response</returns>
         /// <exception cref="ArgumentException">A tag is Required</exception>
         public BaseResponse DeleteTag(string tag)
-		{
-			if (string.IsNullOrEmpty(tag))
-				throw new ArgumentException("A tag is Required", "tag");
+        {
+            if (string.IsNullOrEmpty(tag))
+                throw new ArgumentException("A tag is Required", "tag");
 
-			return SendRequest(new TagDeleteRequest(tag));
-		}
+            return SendRequest(new TagDeleteRequest(tag));
+        }
 
         /// <summary>
         /// Get a List of Tags
         /// </summary>
 	    /// <returns>Service Response</returns>
 		public TagListResponse ListTags()
-		{
-			return SendRequest(new TagListRequest());
-		}
+        {
+            return SendRequest(new TagListRequest());
+        }
 
-	    /// <summary>
-	    /// Create a Push Object
-	    /// </summary>
-	    /// <param name="alert">Alert Text</param>
-	    /// <param name="deviceTypes">Device Types</param>
-	    /// <param name="deviceId">Singular Device ID</param>
-	    /// <param name="deviceAlerts">Device/Platform Specific Alerts</param>
-	    /// <param name="customAudience">Audience</param>
-	    /// <returns>A push object capable of representing the options provided.</returns>
-	    /// TODO: Move to DTOs?
-	    /// <exception cref="InvalidOperationException">when deviceId is not null, deviceTypes must contain 1 element which identifies the deviceId type</exception>
-	    /// <exception cref="ArgumentNullException">Linq source or predicate is null.</exception>
-	    /// <exception cref="ArgumentOutOfRangeException">index is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</exception>
-	    /// <exception cref="NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IList`1" /> is read-only.</exception>
-	    public static Push CreatePush(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null, IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
-		{
-			var push = new Push()
-			{
-				Notification = new Notification()
-				{
-					DefaultAlert = alert
-				}
-			};
+        /// <summary>
+        /// Create a Push Object
+        /// </summary>
+        /// <param name="alert">Alert Text</param>
+        /// <param name="deviceTypes">Device Types</param>
+        /// <param name="deviceId">Singular Device ID</param>
+        /// <param name="deviceAlerts">Device/Platform Specific Alerts</param>
+        /// <param name="customAudience">Audience</param>
+        /// <returns>A push object capable of representing the options provided.</returns>
+        /// TODO: Move to DTOs?
+        /// <exception cref="InvalidOperationException">when deviceId is not null, deviceTypes must contain 1 element which identifies the deviceId type</exception>
+        /// <exception cref="ArgumentNullException">Linq source or predicate is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">index is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</exception>
+        /// <exception cref="NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IList`1" /> is read-only.</exception>
+        public static Push CreatePush(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null, IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
+        {
+            var push = new Push()
+            {
+                Notification = new Notification()
+                {
+                    DefaultAlert = alert
+                }
+            };
 
-			if (customAudience != null)
-			{
-				deviceId = null;
+            if (customAudience != null)
+            {
+                deviceId = null;
 
-				push.Audience = customAudience;
-			}
+                push.Audience = customAudience;
+            }
 
-			if (deviceTypes != null)
-			{
-				push.DeviceTypes = deviceTypes;
+            if (deviceTypes != null)
+            {
+                push.DeviceTypes = deviceTypes;
 
-				if (deviceId != null)
-				{
-					if (deviceTypes.Count != 1)
-					{
-						throw new InvalidOperationException("when deviceId is not null, deviceTypes must contain 1 element which identifies the deviceId type");
-					}
+                if (deviceId != null)
+                {
+                    if (deviceTypes.Count != 1)
+                    {
+                        throw new InvalidOperationException("when deviceId is not null, deviceTypes must contain 1 element which identifies the deviceId type");
+                    }
 
-					var deviceType = deviceTypes[0];
+                    var deviceType = deviceTypes[0];
 
-					switch (deviceType)
-					{
-						case DeviceType.Android:
-							push.SetAudience(AudienceType.Android, deviceId);
-							break;
-						case DeviceType.Ios:
-							push.SetAudience(AudienceType.Ios, deviceId);
-							break;
-						case DeviceType.Wns:
-							push.SetAudience(AudienceType.Windows, deviceId);
-							break;
-						case DeviceType.Mpns:
-							push.SetAudience(AudienceType.WindowsPhone, deviceId);
-							break;
-						case DeviceType.Blackberry:
-							push.SetAudience(AudienceType.Blackberry, deviceId);
-							break;
-					}
-				}
-			}
+                    switch (deviceType)
+                    {
+                        case DeviceType.Android:
+                            push.SetAudience(AudienceType.Android, deviceId);
+                            break;
+                        case DeviceType.Ios:
+                            push.SetAudience(AudienceType.Ios, deviceId);
+                            break;
+                        case DeviceType.Wns:
+                            push.SetAudience(AudienceType.Windows, deviceId);
+                            break;
+                        case DeviceType.Mpns:
+                            push.SetAudience(AudienceType.WindowsPhone, deviceId);
+                            break;
+                        case DeviceType.Blackberry:
+                            push.SetAudience(AudienceType.Blackberry, deviceId);
+                            break;
+                    }
+                }
+            }
 
-			if (deviceAlerts == null || deviceAlerts.Count <= 0)
-			{
-				return push;
-			}
+            if (deviceAlerts == null || deviceAlerts.Count <= 0)
+            {
+                return push;
+            }
 
-			push.Notification.AndroidAlert = (AndroidAlert)deviceAlerts.FirstOrDefault(x => x is AndroidAlert);
-			push.Notification.IosAlert = (IosAlert)deviceAlerts.FirstOrDefault(x => x is IosAlert);
-			push.Notification.WindowsAlert = (WindowsAlert)deviceAlerts.FirstOrDefault(x => x is WindowsAlert);
-			push.Notification.WindowsPhoneAlert = (WindowsPhoneAlert)deviceAlerts.FirstOrDefault(x => x is WindowsPhoneAlert);
-			push.Notification.BlackberryAlert = (BlackberryAlert)deviceAlerts.FirstOrDefault(x => x is BlackberryAlert);
+            push.Notification.AndroidAlert = (AndroidAlert)deviceAlerts.FirstOrDefault(x => x is AndroidAlert);
+            push.Notification.IosAlert = (IosAlert)deviceAlerts.FirstOrDefault(x => x is IosAlert);
+            push.Notification.WindowsAlert = (WindowsAlert)deviceAlerts.FirstOrDefault(x => x is WindowsAlert);
+            push.Notification.WindowsPhoneAlert = (WindowsPhoneAlert)deviceAlerts.FirstOrDefault(x => x is WindowsPhoneAlert);
+            push.Notification.BlackberryAlert = (BlackberryAlert)deviceAlerts.FirstOrDefault(x => x is BlackberryAlert);
 
-			return push;
-		}
+            return push;
+        }
 
         //=====================================================================================================================
 
@@ -316,28 +354,28 @@ namespace UrbanAirSharp
         /// <param name="baseRequest">Request Data</param>
         /// <returns>Service Response</returns>
         private static TResponse SendRequest<TResponse>([NotNull] BaseRequest<TResponse> baseRequest) where TResponse : BaseResponse, new()
-		{
-		    Func<BaseRequest<TResponse>, TResponse> innerAction = (request) =>
-		    {
-		        try
-		        {
-		            var requestTask = request.ExecuteAsync();
+        {
+            Func<BaseRequest<TResponse>, TResponse> innerAction = (request) =>
+            {
+                try
+                {
+                    var requestTask = request.ExecuteAsync();
 
-		            return requestTask.Result;
-		        }
-		        catch (Exception e)
-		        {
-		            Log.Error(request.GetType().FullName, e);
+                    return requestTask.Result;
+                }
+                catch (Exception e)
+                {
+                    Log.Error(request.GetType().FullName, e);
 
-		            return new TResponse()
-		            {
-		                Error = e.InnerException != null ? e.InnerException.Message : e.Message,
-		                Ok = false
-		            };
-		        }
-		    };
+                    return new TResponse()
+                    {
+                        Error = e.InnerException != null ? e.InnerException.Message : e.Message,
+                        Ok = false
+                    };
+                }
+            };
 
             return Awaitable(() => innerAction.Invoke(baseRequest), ConfigureAwait).Result;
-		}
-	}
+        }
+    }
 }

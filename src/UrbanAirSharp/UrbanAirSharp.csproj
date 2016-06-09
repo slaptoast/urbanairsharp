@@ -54,9 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\Association.cs" />
     <Compile Include="Dto\BaseAlert.cs" />
+    <Compile Include="Dto\Channel.cs" />
     <Compile Include="Dto\DeviceToken.cs" />
     <Compile Include="Dto\AddRemoveList.cs" />
+    <Compile Include="Dto\NamedUser.cs" />
     <Compile Include="Dto\OpenAction.cs" />
     <Compile Include="Dto\AndroidAlert.cs" />
     <Compile Include="Dto\Audience.cs" />
@@ -69,6 +72,7 @@
     <Compile Include="Dto\ScheduleInfo.cs" />
     <Compile Include="Dto\Schedule.cs" />
     <Compile Include="Dto\Tag.cs" />
+    <Compile Include="Dto\TagGroups.cs" />
     <Compile Include="Dto\WindowsAlert.cs" />
     <Compile Include="Dto\WindowsPhoneAlert.cs" />
     <Compile Include="Request\Base\DeleteRequest.cs" />
@@ -76,6 +80,10 @@
     <Compile Include="Request\Base\PostRequest.cs" />
     <Compile Include="Request\Base\PutRequest.cs" />
     <Compile Include="Request\DeviceTokenRequest.cs" />
+    <Compile Include="Request\NamedUserAssociationRequest.cs" />
+    <Compile Include="Request\NamedUserDisassocationRequest.cs" />
+    <Compile Include="Request\NamedUserRequest.cs" />
+    <Compile Include="Request\NamedUsersListRequest.cs" />
     <Compile Include="Request\TagDeleteRequest.cs" />
     <Compile Include="Request\TagCreateRequest.cs" />
     <Compile Include="Request\TagListRequest.cs" />
@@ -84,6 +92,8 @@
     <Compile Include="Request\ScheduleListRequest.cs" />
     <Compile Include="Request\ScheduleEditRequest.cs" />
     <Compile Include="Request\ScheduleCreateRequest.cs" />
+    <Compile Include="Response\NamedUserResponse.cs" />
+    <Compile Include="Response\NamedUsersListResponse.cs" />
     <Compile Include="Response\PushResponse.cs" />
     <Compile Include="Response\ResponseObject.cs" />
     <Compile Include="Response\ScheduleEditResponse.cs" />
