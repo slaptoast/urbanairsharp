@@ -38,7 +38,10 @@ namespace UrbanAirSharp.Request.Base
 
 			Log.Debug("Payload - " + json);
 
-			var response = await HttpClient.PostAsync(Host + RequestUrl, new StringContent(json, Encoding, MediaType));
+            StringContent httpContent = new StringContent(json, Encoding, MediaType);
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var response = await HttpClient.PostAsync(Host + RequestUrl, httpContent);
 
 			return await DeserializeResponseAsync(response);
 		}
