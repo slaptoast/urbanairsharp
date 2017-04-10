@@ -17,6 +17,7 @@ using UrbanAirSharp.Request;
 using UrbanAirSharp.Request.Base;
 using UrbanAirSharp.Response;
 using UrbanAirSharp.Type;
+using System.Net;
 
 namespace UrbanAirSharp
 {
@@ -59,6 +60,8 @@ namespace UrbanAirSharp
         /// <param name="appMasterSecret">Application Master Secret</param>
         public UrbanAirSharpGateway(string appKey, string appMasterSecret)
         {
+            //UA has updated their endpoints to only allow TLS12 and TLS 11 connections, SSL 3 no longer works
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             XmlConfigurator.Configure();
             ServiceModelConfig.Create(appKey, appMasterSecret);
         }
